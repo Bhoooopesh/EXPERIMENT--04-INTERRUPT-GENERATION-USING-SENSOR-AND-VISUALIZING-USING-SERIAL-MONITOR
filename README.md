@@ -1,10 +1,10 @@
 # EXPERIMENT-04-INTERRUPT-GENERATION-USING-SENSOR-AND-VISUALIZING-USING-SERIAL-MONITOR
 
-###  DATE: 
+###  DATE: 20 : 02 : 2026
 
-###  NAME: 
-###  ROLL NO :
-###  DEPARTMENT: 
+###  NAME: Bhoopesh P
+###  ROLL NO : 212224110013
+###  DEPARTMENT: CSE(IoT)
 ### Aim:
 To Interface a IR Sensor to digital port of iot development board  and generate an interrupt and visualize on the serial monitor 
 
@@ -124,14 +124,119 @@ The diagram below shows how the GPIO pins are connected to the 16 interrupt line
 16. click on the run to observe the values 
  
 
-## STM 32 CUBE PROGRAM :
+## STM 32 CUBE PROGRAM 4A:
 
+```
+#include "main.h"
+#include "stdio.h"
+
+#if defined(__GNUC__)
+#define PUTCHAR_PROTOTYPE int  __io_putchar(int ch)
+#endif
+
+
+int main(void)
+{
+
+  
+  HAL_Init();
+
+  SystemClock_Config();
+
+ 
+  MX_GPIO_Init();
+  MX_USART2_UART_Init();
+  
+  while (1)
+  {
+  }
+  
+}
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+	if(HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_4)==1)
+	{
+		printf("INTERRUPT GENERATED\n");
+	}
+}
+PUTCHAR_PROTOTYPE
+{
+	HAL_UART_Transmit(&huart2,(uint8_t*)&ch,1,0xFFFF);
+	return ch;
+}
+```
+
+
+## Output screen shots of serial port utility   :
+ <img width="1920" height="1200" alt="Screenshot (412)" src="https://github.com/user-attachments/assets/a32375dd-f7f6-4f01-9e51-98ca2af0d71f" />
+
+
+
+## STM 32 CUBE PROGRAM 4B:
+```
+#include "main.h"
+#include "main.h"
+#include"stdbool.h"
+#include"stdio.h"
+bool IRSENSOR;
+void IRPAIR();
+
+#if defined(__GNUC__)
+#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#endif
+
+
+int main(void)
+{
+
+  
+  HAL_Init();
+
+  SystemClock_Config();
+
+  MX_GPIO_Init();
+  MX_USART2_UART_Init();
+  
+  while (1)
+  {
+    
+	  IRPAIR();
+  }
+}
+void IRPAIR()
+{
+IRSENSOR = HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_4);
+if(IRSENSOR==0)
+{
+HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_SET);
+printf("Obstacle Detected\n");
+HAL_Delay(1000);
+}
+else
+{
+HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_RESET);
+printf("Obstacle Not Detected\n");
+HAL_Delay(1000);
+}
+}
+PUTCHAR_PROTOTYPE
+{
+HAL_UART_Transmit(&huart2,(uint8_t*)&ch,1,0xFFFF);
+return ch;
+}
+```
 
 
 ## Output screen shots of serial port utility   :
  
- 
+ <img width="1920" height="1200" alt="Screenshot (411)" src="https://github.com/user-attachments/assets/7422f597-711a-460b-9d8b-dd304419ff90" />
+
  ## Circuit board :
+![4b(1)](https://github.com/user-attachments/assets/d42021ea-7cea-4f7a-baa1-cf56c03976d4)
+![4b(2)](https://github.com/user-attachments/assets/9a9652b7-600f-4b6a-bee2-e87c19d0db09)
+
+ 
  
  
  
